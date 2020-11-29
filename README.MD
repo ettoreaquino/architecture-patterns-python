@@ -26,3 +26,7 @@ The use of ORM or not (writing the database integrations yourself) is a point of
 
 We also made sure to extend and Absstract Class when implementing the Repository object. Which allows us to mock respositories for tests very quickly. 
 
+## Chapter 03 - Abstractions
+Since this chapter is just an interlude, we shall not sincronize it with the master branch. Thus, in order to acess it:
+
+```git checkout ch-03-abstractions```
