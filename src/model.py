@@ -1,9 +1,10 @@
+from __future__ import annotations
 from datetime import date
 from dataclasses import dataclass
 from typing import Optional, NewType
 
 
-@dataclass(frozen=True)
+@dataclass(unsafe_hash=True)
 class OrderLine:
     orderid: str
     sku: str
@@ -13,7 +14,7 @@ class Batch:
     def __init__(
         self, ref: str, sku: str, qty: int, eta: Optional[date]
     ):
-
+        
         self.reference = ref
         self.sku = sku
         self.eta = eta

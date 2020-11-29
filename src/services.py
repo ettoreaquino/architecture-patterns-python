@@ -1,5 +1,7 @@
-from src.model import Batch, OrderLine
 from typing import List
+
+from src.model import Batch, OrderLine
+
 
 class OutOfStock(Exception):
     pass
