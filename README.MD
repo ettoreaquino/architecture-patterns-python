@@ -34,3 +34,5 @@ Since this chapter is just an interlude, we shall not sincronize it with the mas
 The main idea behind this chapter is to walkthrough a quite simple application that performs file syncronization between two directories. It is a kind of problem that is thightly coupled with IO (reading files, moving files, deleting files, reading directories etc).
 
 In order to understand how a proper abstraction might help with the task, the authors started with an initial canvas and refactored from it, ading better abstractions to improve testing and later reflected it into the domain logic.
+
+Another big point here is the *Edge-to-Edge* testing. Which is the abbility to unit test the `sync` function, even if it involves integration and IO.
