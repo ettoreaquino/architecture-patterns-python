@@ -56,11 +56,11 @@ def determine_actions(src_hashes, dst_hashes, src_folder, dst_folder):
 # =========================================================================== #
 def sync(source, dest):
     # imperative shell step 1, gather inputs
-    source_hashes = read_paths_and_hashes(source)  
-    dest_hashes = read_paths_and_hashes(dest)  
+    source_hashes = read_paths_and_hashes(source)
+    dest_hashes = read_paths_and_hashes(dest)
 
     # step 2: call functional core
-    actions = determine_actions(source_hashes, dest_hashes, source, dest)  
+    actions = determine_actions(source_hashes, dest_hashes, source, dest)
 
     # imperative shell step 3, apply outputs
     for action, *paths in actions:
