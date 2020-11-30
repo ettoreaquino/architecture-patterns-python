@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-from src import model
-from src.model import OrderLine
+from domain import model
+from domain.model import OrderLine
 
-from src.repository import AbstractRepository
+from adapters.repository import AbstractRepository
 
 class InvalidSku(Exception):
     pass

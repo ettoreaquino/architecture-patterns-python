@@ -16,6 +16,4 @@ RUN poetry install --no-dev
 
 COPY . .
 
-CMD gunicorn -w 1 -b "0.0.0.0:9080" -t 300 src.falcon_app:app
-# ENV FLASK_APP=src/flask_app.py FLASK_DEBUG=1 PYTHONUNBUFFERED=1
-# CMD flask run --host=0.0.0.0 --port=80
+CMD gunicorn -w 1 -b "0.0.0.0:9080" -t 300 entrypoints.falcon_app:app
