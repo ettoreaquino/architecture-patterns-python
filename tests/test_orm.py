@@ -60,8 +60,6 @@ def test_saving_allocations(session):
     session.add(batch)
     session.commit()
     rows = list(session.execute('SELECT orderline_id, batch_id FROM "allocations"'))
-    
-    # Batch here is an instance of the row within the table. This, batch.id and line.id
     # pylint: disable=no-member
     assert rows == [(batch.id, line.id)]
 

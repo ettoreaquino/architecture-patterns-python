@@ -1,20 +1,11 @@
 from sqlalchemy import (
-    Column,
-    Date,
-    ForeignKey,
-    Integer,
-    MetaData,
-    String,
-    Table
+    Table, MetaData, Column, Integer, String, Date,
+    ForeignKey
 )
 from sqlalchemy.orm import mapper, relationship
 
-# =========================================================================== #
-#   In order to invert the dependency the ORM should depend on the model, and #
-# not the other way around. By importing the model we make sure the dependen- #
-# cy is correctly pointed.                                                    #
-# =========================================================================== #
 from src import model
+
 
 metadata = MetaData()
 

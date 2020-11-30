@@ -2,15 +2,19 @@ import abc
 
 from src import model
 
+
+
 class AbstractRepository(abc.ABC):
 
-    @abc.abstractclassmethod
+    @abc.abstractmethod
     def add(self, batch: model.Batch):
         raise NotImplementedError
 
-    @abc.abstractclassmethod
+    @abc.abstractmethod
     def get(self, reference) -> model.Batch:
         raise NotImplementedError
+
+
 
 class SqlAlchemyRepository(AbstractRepository):
 
