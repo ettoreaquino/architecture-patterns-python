@@ -56,3 +56,5 @@ Since we can test our software against the service layer, we don’t really need
 The idea behind this chapter is to bring awareness to at which level of abstraction should you write your codes, and that is why you should decouple the tests for your domain services. This will allow you to test against your services whenever you need to reflect about a new feature that does not need a domain model refactoring.
 
 In order to do that, we shall have a service layer that's fully decoupled from the domain, we need to rewrite its API to work in terms of primitives.
+
+In an ideal world, you’ll have all the services you need to be able to test entirely against the service layer, rather than hacking state via repositories or the database. This pays off in your end-to-end tests as well.
