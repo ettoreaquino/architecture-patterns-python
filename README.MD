@@ -35,7 +35,16 @@ Since this chapter is just an interlude, we shall not sincronize it with the mas
 In this chapter the authors add a Service Layer, which will be called using Flask. This Layer will work as an entrypoint for our domain model.
 Because the service layer depends on the AbstractRepository, we can unit test it by using FakeRepository but run our production code using SqlAlchemyRepository.
 
-<img src=images/ch_04_serviceLayer.png
-     alt="Markdown Monster icon" />
+<img src=images/ch4_serviceLayer.png
+     alt="serviceLayer Icon" />
 
 At this point we will need to spin up containers, so that we can test the application against a proper DB as well as provide an endpoint for our API to be called.
+
+My choice here was to refactor the infrastructure to use Falcon instead of Flask, as well as use Poetry to manage the dependencies.
+
+Even though our architeture is taking shape the service layer is still tightly coupled to the domain, because its API is expressed in terms of OrderLine objects. This will be corrected further down the road.
+
+Here is where we are so far:
+
+<img src=images/ch4_serviceLayerArchitecture.png
+     alt="serviceLayer Architecture Icon" />
