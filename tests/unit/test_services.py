@@ -1,8 +1,8 @@
 import pytest
 
-from domain import model
-from adapters import repository
-from service import services
+from domain import model # pylint: disable=import-error
+from adapters import repository # pylint: disable=import-error
+from service import services # pylint: disable=import-error
 
 
 class FakeRepository(repository.AbstractRepository):

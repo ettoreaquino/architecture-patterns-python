@@ -1,5 +1,5 @@
 from datetime import date
-from domain.model import Batch, OrderLine
+from domain.model import Batch, OrderLine # pylint: disable=import-error
 
 
 def test_allocating_to_a_batch_reduces_the_available_quantity():

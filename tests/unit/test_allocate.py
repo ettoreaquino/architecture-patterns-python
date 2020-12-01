@@ -1,6 +1,11 @@
 from datetime import date, timedelta
 import pytest
-from domain.model import allocate, OrderLine, Batch, OutOfStock
+from domain.model import ( # pylint: disable=import-error
+    allocate,
+    OrderLine,
+    Batch,
+    OutOfStock
+) # pylint: disable=import-error
 
 today = date.today()
 tomorrow = today + timedelta(days=1)

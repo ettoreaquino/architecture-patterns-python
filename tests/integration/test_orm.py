@@ -1,6 +1,6 @@
 from datetime import date
 
-from domain import model
+from domain import model # pylint: disable=import-error
 
 def test_orderline_mapper_can_load_lines(session):
     session.execute(
