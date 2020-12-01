@@ -48,3 +48,11 @@ Here is where we are so far:
 
 <img src=images/ch4_serviceLayerArchitecture.png
      alt="serviceLayer Architecture Icon" />
+
+## Chapter 05 - TDD in High Gear and Low Gear
+
+Since we can test our software against the service layer, we don’t really need tests for the domain model anymore. Instead, we could rewrite all of the domain-level tests in terms of the service layer.
+
+The idea behind this chapter is to bring awareness to at which level of abstraction should you write your codes, and that is why you should decouple the tests for your domain services. This will allow you to test against your services whenever you need to reflect about a new feature that does not need a domain model refactoring.
+
+In order to do that, we shall have a service layer that's fully decoupled from the domain, we need to rewrite its API to work in terms of primitives.

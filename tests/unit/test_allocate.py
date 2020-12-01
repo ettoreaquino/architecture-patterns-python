@@ -5,7 +5,7 @@ from domain.model import ( # pylint: disable=import-error
     OrderLine,
     Batch,
     OutOfStock
-) # pylint: disable=import-error
+)
 
 today = date.today()
 tomorrow = today + timedelta(days=1)

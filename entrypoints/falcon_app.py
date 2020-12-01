@@ -1,4 +1,5 @@
 # pylint: disable=maybe-no-member
+from datetime import datetime
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import falcon
@@ -26,22 +27,48 @@ class StorageError(Exception):
                                description)
 
 
-class Resource:
+class Router:
     def __init__(self):
         pass
 
-    def on_post(self, req, res):
+    def on_post_add_batch(self, req, res):
         print("POST REQUESTED")
+
         session = get_session()
         repo = repository.SqlAlchemyRepository(session)
-        print("media", req.media)
-        line = model.OrderLine(
-            req.media['orderid'],
-            req.media['sku'],
-            req.media['qty']
+        eta = req.media['eta']
+        ref = req.media['ref']
+        sku = req.media['sku']
+        qty = req.media['qty']
+
+        if eta is not None:
+            eta = datetime.fromisoformat(eta).date()
+
+        services.add_batch(
+            ref, sku, qty, eta,
+            repo, session
         )
+        
+        res.body = "OK"
+        res.status = falcon.HTTP_201
+        return None
+
+    def on_post_allocate(self, req, res):
+        print("POST REQUESTED")
+
+        session = get_session()
+        repo = repository.SqlAlchemyRepository(session)
+        orderid = req.media['orderid']
+        sku = req.media['sku']
+        qty = req.media['qty']
+
         try:
-            batchref = services.allocate(line, repo, session)
+            batchref = services.allocate(
+                orderid=orderid,
+                sku=sku,
+                qty=qty,
+                repo=repo,
+                session=session)
         except (model.OutOfStock, services.InvalidSku) as e:
             res.body = json.dumps({'message': str(e)})
             res.status = falcon.HTTP_400
@@ -53,7 +80,8 @@ class Resource:
 
 
 app = falcon.API()
-app.add_route('/allocate', Resource())
+app.add_route('/allocate', Router(), suffix='allocate')
+app.add_route('/add_batch', Router(), suffix='add_batch')
 
 # If a responder ever raised an instance of StorageError, pass control to
 # the given handler.
