@@ -58,3 +58,23 @@ The idea behind this chapter is to bring awareness to at which level of abstract
 In order to do that, we shall have a service layer that's fully decoupled from the domain, we need to rewrite its API to work in terms of primitives.
 
 In an ideal world, you’ll have all the services you need to be able to test entirely against the service layer, rather than hacking state via repositories or the database. This pays off in your end-to-end tests as well.
+
+## Chapter 06 - Unit of Work
+If the Repository pattern is our abstraction over the idea of persistent storage, the Unit of Work (UoW) pattern is our abstraction over the idea of atomic operations. It will allow us to finally and fully decouple our service layer from the data layer.
+
+At this point a lot of communication occurs across the layers of our infrastructure: the API talks directly to the database layer to start a session, it talks to the repository layer to initialize SQLAlchemyRepository, and it talks to the service layer to ask it to allocate.
+
+Our goal is to make the Api layer do only two things: initialize a unit of work and invoke a service. The service then, colaborate with the UoW but none of them, or the API talks directly to the database.
+
+<img src=images/ch6_unitOfWork.png
+     alt="serviceLayer Architecture Icon" />
+
+The UoW acts as a single entrypoint to our persistent storage, and it keeps track of what objects were loaded and of the latest state.1
+
+This gives us three useful things:
+
+ - A stable snapshot of the database to work with, so the objects we use aren’t changing halfway through an operation
+
+ - A way to persist all of our changes at once, so if something goes wrong, we don’t end up in an inconsistent state
+
+ - A simple API to our persistence concerns and a handy place to get a repository
