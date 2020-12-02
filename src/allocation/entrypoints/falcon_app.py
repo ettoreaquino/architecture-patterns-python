@@ -5,15 +5,12 @@ from sqlalchemy.orm import sessionmaker
 import falcon
 import json
 
-from domain import model
-from adapters import orm, repository
-from service import services
+from allocation.domain import model
+from allocation.adapters import orm
+from allocation.service_layer import services, unit_of_work
 
-import config
 
 orm.start_mappers()
-get_session = sessionmaker(bind=create_engine(config.get_postgres_uri()))
-
 
 class StorageError(Exception):
 
@@ -33,9 +30,6 @@ class Router:
 
     def on_post_add_batch(self, req, res):
         print("POST REQUESTED")
-
-        session = get_session()
-        repo = repository.SqlAlchemyRepository(session)
         eta = req.media['eta']
         ref = req.media['ref']
         sku = req.media['sku']
@@ -46,7 +40,7 @@ class Router:
 
         services.add_batch(
             ref, sku, qty, eta,
-            repo, session
+            unit_of_work.SqlAlchemyUnitOfWork()
         )
         
         res.body = "OK"
@@ -55,20 +49,14 @@ class Router:
 
     def on_post_allocate(self, req, res):
         print("POST REQUESTED")
-
-        session = get_session()
-        repo = repository.SqlAlchemyRepository(session)
         orderid = req.media['orderid']
         sku = req.media['sku']
         qty = req.media['qty']
 
         try:
             batchref = services.allocate(
-                orderid=orderid,
-                sku=sku,
-                qty=qty,
-                repo=repo,
-                session=session)
+                orderid, sku, qty,
+                unit_of_work.SqlAlchemyUnitOfWork())
         except (model.OutOfStock, services.InvalidSku) as e:
             res.body = json.dumps({'message': str(e)})
             res.status = falcon.HTTP_400

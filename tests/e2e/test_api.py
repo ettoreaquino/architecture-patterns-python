@@ -2,7 +2,7 @@ import uuid
 import pytest
 import requests
 
-import config # pylint: disable=import-error
+from allocation import config # pylint: disable=import-error
 
 def random_suffix():
     return uuid.uuid4().hex[:6]

@@ -77,4 +77,16 @@ This gives us three useful things:
 
  - A way to persist all of our changes at once, so if something goes wrong, we don’t end up in an inconsistent state
 
- - A simple API to our persistence concerns and a handy place to get a repository
+ - A simple API to our persistence concerns and a handy place to get a repository.
+
+ The Unit of Work pattern is an abstraction around data integrity
+It helps to enforce the consistency of our domain model, and improves performance, by letting us perform a single flush operation at the end of an operation.
+
+It works closely with the Repository and Service Layer patterns
+The Unit of Work pattern completes our abstractions over data access by representing atomic updates. Each of our service-layer use cases runs in a single unit of work that succeeds or fails as a block.
+
+This is a lovely case for a context manager
+Context managers are an idiomatic way of defining scope in Python. We can use a context manager to automatically roll back our work at the end of a request, which means the system is safe by default.
+
+SQLAlchemy already implements this pattern
+We introduce an even simpler abstraction over the SQLAlchemy Session object in order to “narrow” the interface between the ORM and our code. This helps to keep us loosely coupled.
