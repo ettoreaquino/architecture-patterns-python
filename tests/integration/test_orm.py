@@ -1,6 +1,5 @@
+from allocation.domain import model
 from datetime import date
-
-from allocation.domain import model # pylint: disable=import-error
 
 def test_orderline_mapper_can_load_lines(session):
     session.execute(
@@ -60,7 +59,6 @@ def test_saving_allocations(session):
     session.add(batch)
     session.commit()
     rows = list(session.execute('SELECT orderline_id, batch_id FROM "allocations"'))
-    # pylint: disable=no-member
     assert rows == [(batch.id, line.id)]
 
 
