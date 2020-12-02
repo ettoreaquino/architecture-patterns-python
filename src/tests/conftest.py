@@ -1,3 +1,4 @@
+# pylint: disable=redefined-outer-name
 import time
 from pathlib import Path
 
@@ -67,7 +68,7 @@ def postgres_session(postgres_db):
 
 @pytest.fixture
 def restart_api():
-    (Path(__file__).parent / '../src/allocation/entrypoints/falcon_app.py').touch()
+    (Path(__file__).parent / '../allocation/entrypoints/falcon_app.py').touch()
     time.sleep(0.5)
     wait_for_webapp_to_come_up()
 
