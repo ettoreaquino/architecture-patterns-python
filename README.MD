@@ -90,3 +90,27 @@ Context managers are an idiomatic way of defining scope in Python. We can use a 
 
 SQLAlchemy already implements this pattern
 We introduce an even simpler abstraction over the SQLAlchemy Session object in order to “narrow” the interface between the ORM and our code. This helps to keep us loosely coupled.
+
+## Chapter 07 - Aggregates and Consistency Boundaries
+> **contraint**: rule that restrics the possible states our model can get into.
+
+> **invariant**: a condition that is always true.
+
+Several applications might not get into trouble when dealing with business constraints but, as soon as *Concurrency* is introduced, things start to get complicated. *How do you ensure two people don't book the same room?*. *How do you ensure that an order line is allocated to only one batch at a time?*. When system get big and several events are happening at the same time, coupling with constraints and ivariants become tricky, only a well defined architecture will prevent your business rules to be broken.
+
+### Choosing an Aggregate
+>The Aggregate pattern is a design pattern from the DDD community that helps us to resolve this tension. An aggregate is just a domain object that contains other domain objects and lets us treat the whole collection as a single unit.
+
+By choosing an *aggregate* correctly we prevent the need of locking the entire database for new locks everytime a new product is added to it.
+
+>*An AGGREGATE is a cluster of associated objects that we treat as a unit for the purpose of data changes.
+**Eric Evans, Domain-Driven Design blue book***
+
+ - **Aggregates are your entrypoints into the domain model**:
+By restricting the number of ways that things can be changed, we make the system easier to reason about.
+
+ - **Aggregates are in charge of a consistency boundary**:
+An aggregate’s job is to be able to manage our business rules about invariants as they apply to a group of related objects. It’s the aggregate’s job to check that the objects within its remit are consistent with each other and with our rules, and to reject changes that would break the rules.
+
+ - **Aggregates and concurrency issues go together**:
+When thinking about implementing these consistency checks, we end up thinking about transactions and locks. Choosing the right aggregate is about performance as well as conceptual organization of your domain.
